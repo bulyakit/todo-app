@@ -1,10 +1,21 @@
 <?php
 
-namespace ToDoApp\Formatter;
+namespace ToDoApp\Apps\ToDo\Presentation\Formatter;
 
+use Exception;
 use ToDoApp\Apps\ToDo\Application\Collection\ToDoCollection;
 use ToDoApp\Apps\ToDo\Domain\Aggregate\ToDo;
-use Exception;
+use ToDoApp\Formatter\Group;
+use ToDoApp\Formatter\GroupCollection;
+use ToDoApp\Formatter\Password;
+use ToDoApp\Formatter\Role;
+use ToDoApp\Formatter\RoleCollection;
+use ToDoApp\Formatter\Token;
+use ToDoApp\Formatter\TokenHash;
+use ToDoApp\Formatter\UnsignedInteger;
+use ToDoApp\Formatter\User;
+use ToDoApp\Formatter\UserLog;
+use ToDoApp\Formatter\UserLogCollection;
 
 
 /**

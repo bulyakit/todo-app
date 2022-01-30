@@ -27,10 +27,8 @@ class Connection implements ConnectionInterface
      */
     public function __construct(array $config)
     {
-        $this->config     = $config;
-//        $this->connection = mysqli_connect($config['host'], $config['user'], $config['pass'], $config['db'], $config['port']);
+        $this->config = $config;
         $this->initConnection();
-//          $this->alternateConnect();
     }
 
     /**
@@ -65,6 +63,7 @@ class Connection implements ConnectionInterface
      * @return array|null
      *
      * @throws DatabaseException
+     * @throws InvalidBindingException
      */
     public function selectOne(string $query, array $bindings = [], int $cacheTime = 0): ?array
     {
@@ -87,17 +86,15 @@ class Connection implements ConnectionInterface
     {
         $this->ping();
 
-//        return $this->cache($query, $bindings, $cacheTime, function(string $query, array $bindings) {
-            if (count($bindings)) {
-                $this->bindingResolver($query, $bindings);
-            }
+        if (count($bindings)) {
+            $this->bindingResolver($query, $bindings);
+        }
 
-            $statement = $this->connection->prepare($query);
-            $this->bind($statement, $bindings);
-            $statement->execute();
+        $statement = $this->connection->prepare($query);
+        $this->bind($statement, $bindings);
+        $statement->execute();
 
-            return $this->getResult($statement);
-//        });
+        return $this->getResult($statement);
     }
 
     /**
@@ -327,7 +324,7 @@ class Connection implements ConnectionInterface
             $referenceForBindings = [];
 
             foreach ($bindings as $bindingIndex => $bindValue) {
-                $types .= $this->determineType($bindValue);
+                $types                  .= $this->determineType($bindValue);
                 $referenceForBindings[] = &$bindings[$bindingIndex];
             }
 
@@ -368,36 +365,18 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @return void
-     */
-    private function initConnection2()
-    {
-        print_r($this->config);
-        $this->connection = mysqli_connect(
-            $this->config['default']['hostname'],
-            $this->config['default']['username'],
-            $this->config['default']['password'],
-            $this->config['default']['database'],
-//            $this->config['default']['port']
-        );
-    }
-
-
-    /**
      * @throws DatabaseException
      */
     private function initConnection()
     {
         $connection = new \mysqli();
         $connection->init();
-
         $connection->real_connect(
-            $this->config['default']['hostname'],
-            $this->config['default']['username'],
-            $this->config['default']['password'],
-            $this->config['default']['database'],
+            $this->config['hostname'],
+            $this->config['username'],
+            $this->config['password'],
+            $this->config['database'],
         );
-
         if ($connection->connect_error) {
             throw new DatabaseException($connection->connect_error, $connection->connect_errno);
         }

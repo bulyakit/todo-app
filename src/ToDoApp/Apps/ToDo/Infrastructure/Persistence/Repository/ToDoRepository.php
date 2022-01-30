@@ -62,9 +62,9 @@ class ToDoRepository implements ToDoRepositoryInterface
             ";
 
         $bindings = [
-          'taskName' => $taskName,
-          'dateTime' => $dateTime,
-          'isDone'   => $isDone
+          'taskName' => $taskName->getValue(),
+          'dateTime' => $dateTime->getValue(),
+          'isDone'   => $isDone->getValue(),
         ];
 
         $this->connection->insert($query, $bindings);

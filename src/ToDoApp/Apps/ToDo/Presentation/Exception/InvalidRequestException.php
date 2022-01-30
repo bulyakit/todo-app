@@ -1,6 +1,6 @@
 <?php
 
-namespace ToDoApp\Exception;
+namespace ToDoApp\Apps\ToDo\Presentation\Exception;
 
 use Exception;
 use Throwable;

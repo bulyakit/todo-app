@@ -1,13 +1,24 @@
 <?php
 
-namespace ToDoApp\Validator;
+namespace ToDoApp\Apps\ToDo\Presentation\Validator;
 
 use DateTime;
 use Exception;
 use InvalidArgumentException;
-use ToDoApp\Exception\InvalidRequestException;
+use ToDoApp\Apps\ToDo\Presentation\Exception\InvalidRequestException;
 use ToDoApp\Scalar\Exception\InvalidStringException;
 use ToDoApp\Scalar\ValueObject\String\StringLiteral;
+use ToDoApp\Validator\CityName;
+use ToDoApp\Validator\CurrencyCode;
+use ToDoApp\Validator\IntegerOutOfRangeException;
+use ToDoApp\Validator\InvalidEnumValueException;
+use ToDoApp\Validator\InvalidTimeZoneException;
+use ToDoApp\Validator\NumericValueOutOfRangeException;
+use ToDoApp\Validator\Street;
+use ToDoApp\Validator\TimeZone;
+use ToDoApp\Validator\UnsignedFloat;
+use ToDoApp\Validator\UnsignedInteger;
+use ToDoApp\Validator\ZipCode;
 
 /**
  * Class BaseValidator
@@ -40,7 +51,7 @@ class BaseValidator
     protected function isValidRequest(array $params, array $prerequisites)
     {
         $errors = [];
-
+print_r($params);
         foreach ($prerequisites as $prerequisite) {
             if (is_array($prerequisite)) {
                 $this->isValidPrerequisite($prerequisite);

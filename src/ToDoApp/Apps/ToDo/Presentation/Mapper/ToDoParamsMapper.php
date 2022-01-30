@@ -1,15 +1,13 @@
 <?php
 
-namespace ToDoApp\Mapper;
+namespace ToDoApp\Apps\ToDo\Presentation\Mapper;
 
 use ToDoApp\Scalar\Exception\IntegerOutOfRangeException;
 use ToDoApp\Scalar\Exception\InvalidDateException;
 use ToDoApp\Scalar\Exception\InvalidStringException;
 use ToDoApp\Scalar\Exception\InvalidTimeZoneException;
 use ToDoApp\Scalar\Exception\NumericValueOutOfRangeException;
-use ToDoApp\Scalar\ValueObject\Boolean\BooleanValue;
 use ToDoApp\Scalar\ValueObject\DateTime\DateTime;
-use ToDoApp\Scalar\ValueObject\Numeric\UnsignedInteger;
 use ToDoApp\Scalar\ValueObject\String\StringLiteral;
 
 /**
@@ -31,10 +29,10 @@ class ToDoParamsMapper
     public function mapAdd(array $params): array
     {
         return [
-            new UnsignedInteger($params['id']),
+//            new UnsignedInteger($params['id']),
             new StringLiteral($params['taskName']),
             DateTime::buildFromString($params['dateTime']),
-            new BooleanValue($params['isDone']),
+//            new BooleanValue($params['isDone']),
         ];
     }
 }

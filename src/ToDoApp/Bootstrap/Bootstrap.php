@@ -6,18 +6,14 @@ namespace ToDoApp\Bootstrap;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use Livita\Database\Adapter\MysqliAdapter;
-use Livita\Database\Adapter\MysqliNameBindingResolver;
-use Livita\Database\Collection\ConnectionManager;
-use Livita\Database\Config\ConnectionConfig;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\InvalidArgumentException;
 use Slim\App;
+use ToDoApp\Database\Contract\ConnectionInterface;
 use ToDoApp\Database\Service\Connection;
 use ToDoApp\DataBase\Exception\DatabaseException;
 use ToDoApp\Route\Routing;
-use ToDoApp\Scalar\Exception\InvalidCollectionItemException;
 
 /**
  * Class Bootstrap
@@ -49,7 +45,7 @@ class Bootstrap
     public function initialize(): void
     {
         $this->initEnvironment();
-//        $this->initConnections();
+        $this->initConnections();
 //        $this->initLogger();
 //        $this->initHttpClient();
 //        $this->initTemplateEngine();
@@ -84,10 +80,9 @@ class Bootstrap
             throw new InvalidArgumentException('The default database section is missing from settings');
         }
 
-        $databaseSettings  = $settings['database'];
+        $databaseSettings  = $settings['database']['default'];
 
         $connection = new Connection($databaseSettings);
-
 
 //        $connectionManager = new ConnectionManager();
 //        $queryLogAdapter   = new PhpArrayAdapter();
@@ -107,8 +102,9 @@ class Bootstrap
 //
 //            $connectionManager->add($connectionName, $connection);
 //        }
-//
+
 //        $container[ConnectionManager::class] = $connectionManager;
+        $container[ConnectionInterface::class] = $connection;
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace ToDoApp\Validator;
+namespace ToDoApp\Apps\ToDo\Presentation\Validator;
 
-use ToDoApp\Exception\InvalidRequestException;
+use ToDoApp\Apps\ToDo\Presentation\Exception\InvalidRequestException;
 
 /**
  * Class ToDoRequestValidator
@@ -17,9 +17,8 @@ class ToDoRequestValidator extends BaseValidator
     public function validateAdd(array $params)
     {
         $this->isValidRequest($params, [
-            [BaseValidator::FIELD => 'id', BaseValidator::CALLBACK => [$this, 'isValidUnsignedInteger']],
             [BaseValidator::FIELD => 'taskName', BaseValidator::CALLBACK => [$this, 'isValidStringLiteral']],
-            [BaseValidator::FIELD => 'datetime', BaseValidator::CALLBACK => [$this, 'isValidDateTime']],
+            [BaseValidator::FIELD => 'dateTime', BaseValidator::CALLBACK => [$this, 'isValidDateTime']],
         ]);
     }
 }

@@ -2,13 +2,29 @@
 
 namespace ToDoApp\Route;
 
-use ToDoApp\Controller\ToDoController;
+use Slim\App;
+use ToDoApp\Apps\ToDo\Presentation\Controller\ToDoController;
 
 /**
  * Class ToDoRouting
  */
-class ToDoRouting extends AbstractRouting
+class ToDoRouting
 {
+    /**
+     * @var App
+     */
+    protected App $application;
+
+    /**
+     * Routing constructor.
+     *
+     * @param App $application
+     */
+    public function __construct(App $application)
+    {
+        $this->application = $application;
+    }
+
     /**
      * Initialize routes.
      */
