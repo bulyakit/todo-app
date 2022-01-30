@@ -23,7 +23,7 @@ services:
 
     webserver:
         image: xqdocker/ubuntu-nginx:latest
-        container_name: test-nginx2
+        container_name: test-nginx
         ports:
             - "8080:80"
         volumes:

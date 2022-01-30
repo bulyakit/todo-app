@@ -1,7 +1,7 @@
 <?php
 
 use Slim\App;
-use ToDoApp\Bootstrap\Bootstrap;
+use App\Bootstrap\Bootstrap;
 
 require_once __DIR__ . '/vendor/autoload.php';
 echo "IMALIVE";
@@ -14,15 +14,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 try {
-    $settings    = require_once __DIR__ . '/ToDoApp/Config/settings.php';
+    $settings    = require_once __DIR__ . '/Config/settings.php';
     $application = new App($settings);
-    $bootstrap = new Bootstrap($application);
+    $bootstrap   = new Bootstrap($application);
     $bootstrap->initialize();
 
     $application->run();
-
 } catch (Throwable $e) {
-    echo 'caught' . PHP_EOL;
+    echo 'caught: ' . PHP_EOL;
     echo $e->getMessage() . PHP_EOL;
 }
 
