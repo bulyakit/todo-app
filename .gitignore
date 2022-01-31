@@ -1,5 +1,6 @@
 .idea/
 /src/Api/
 /src/.idea/
-/src/vendor/
+/vendor/
+/src/vendor
 help.txt

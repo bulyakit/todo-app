@@ -23,7 +23,7 @@ services:
 
     webserver:
         image: xqdocker/ubuntu-nginx:latest
-        container_name: test-nginx
+        container_name: nginx
         ports:
             - "8080:80"
         volumes:
@@ -34,9 +34,9 @@ services:
     
     composer:
         image: composer:2.2.0
-        command: composer dump-autoload 
+        command: composer install
         volumes:
-            - ./src:/app
+            - ./src/:/app
     
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
