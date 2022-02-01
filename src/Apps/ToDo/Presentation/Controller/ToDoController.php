@@ -11,7 +11,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use App\Scalar\Exception\InvalidCollectionItemException;
+use App\Collection\Exception\InvalidCollectionItemException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 

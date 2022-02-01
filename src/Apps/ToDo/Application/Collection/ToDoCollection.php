@@ -3,7 +3,7 @@
 namespace App\Apps\ToDo\Application\Collection;
 
 use App\Apps\ToDo\Domain\Aggregate\ToDo;
-use App\Scalar\Collection\HashMap;
+use App\Collection\HashMap;
 
 /**
  * Class ToDoCollection

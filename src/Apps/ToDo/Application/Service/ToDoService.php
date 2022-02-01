@@ -10,7 +10,7 @@ use App\Apps\ToDo\Domain\Service\SetDoneToDoService;
 use App\Apps\ToDo\Infrastructure\Persistence\Factory\ToDoFactory;
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
 use App\Database\Contract\ConnectionInterface;
-use App\Scalar\Exception\InvalidCollectionItemException;
+use App\Collection\Exception\InvalidCollectionItemException;
 
 /**
  * Class ToDoService

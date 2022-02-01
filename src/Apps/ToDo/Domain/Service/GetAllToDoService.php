@@ -4,7 +4,7 @@ namespace App\Apps\ToDo\Domain\Service;
 
 use App\Apps\ToDo\Application\Collection\ToDoCollection;
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
-use App\Scalar\Exception\InvalidCollectionItemException;
+use App\Collection\Exception\InvalidCollectionItemException;
 
 /**
  * Class GetAllToDoService

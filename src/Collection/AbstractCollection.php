@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Scalar\Collection;
+namespace App\Collection;
 
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
-use App\Scalar\Exception\InvalidCollectionItemException;
+use App\Collection\Exception\InvalidCollectionItemException;
 use Traversable;
 
 /**
  * Class AbstractCollection
- *
- * @package Livita\Scalar
  */
 abstract class AbstractCollection implements IteratorAggregate, Countable, JsonSerializable
 {

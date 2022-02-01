@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Scalar\Collection;
+namespace App\Collection;
 
-use App\Scalar\Exception\InvalidCollectionItemException;
+use App\Collection\Exception\InvalidCollectionItemException;
 
 /**
  * Class HashMap

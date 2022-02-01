@@ -5,8 +5,8 @@ namespace App\Apps\ToDo\Infrastructure\Persistence\Repository;
 use App\Apps\ToDo\Application\Collection\ToDoCollection;
 use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 use App\Apps\ToDo\Infrastructure\Persistence\Factory\ToDoFactory;
+use App\Collection\Exception\InvalidCollectionItemException;
 use App\Database\Contract\ConnectionInterface;
-use App\Scalar\Exception\InvalidCollectionItemException;
 
 
 /**
