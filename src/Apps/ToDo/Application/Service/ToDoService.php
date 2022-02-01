@@ -6,13 +6,11 @@ use App\Apps\ToDo\Application\Collection\ToDoCollection;
 use App\Apps\ToDo\Application\Contract\ToDoServiceInterface;
 use App\Apps\ToDo\Domain\Service\AddToDoService;
 use App\Apps\ToDo\Domain\Service\GetAllToDoService;
+use App\Apps\ToDo\Domain\Service\SetDoneToDoService;
 use App\Apps\ToDo\Infrastructure\Persistence\Factory\ToDoFactory;
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
 use App\Database\Contract\ConnectionInterface;
-use Scalar\Exception\InvalidCollectionItemException;
-use App\Scalar\ValueObject\Boolean\BooleanValue;
-use App\Scalar\ValueObject\DateTime\DateTime;
-use App\Scalar\ValueObject\String\StringLiteral;
+use App\Scalar\Exception\InvalidCollectionItemException;
 
 /**
  * Class ToDoService
@@ -33,16 +31,15 @@ class ToDoService implements ToDoServiceInterface
     }
 
     /**
-     * @param StringLiteral $taskName
-     * @param DateTime $dateTime
-     * @param BooleanValue $isDone
+     * @param string $taskName
+     * @param \DateTime $dateTime
      */
-    public function add(StringLiteral $taskName, DateTime $dateTime, BooleanValue $isDone)
+    public function add(string $taskName, \DateTime $dateTime)
     {
         $repository = $this->getTodoRepositoryService();
         $addToDoService = new AddToDoService($repository);
 
-        $addToDoService->add($taskName, $dateTime, $isDone);
+        $addToDoService->add($taskName, $dateTime);
     }
 
     /**
@@ -57,6 +54,23 @@ class ToDoService implements ToDoServiceInterface
         return $getAllToDoService->getAll();
     }
 
+
+    /**
+     * @param int $toDoId
+     *
+     * @return void
+     */
+    public function setDone(int $toDoId)
+    {
+        $repository = $this->getTodoRepositoryService();
+        $setDoneToDoService = new SetDoneToDoService($repository);
+
+        $setDoneToDoService->set($toDoId);
+    }
+
+    /**
+     * @return ToDoRepository
+     */
     private function getTodoRepositoryService(): TodoRepository
     {
         $factory = new ToDoFactory();

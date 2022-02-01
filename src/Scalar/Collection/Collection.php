@@ -2,7 +2,7 @@
 
 namespace App\Scalar\Collection;
 
-use Scalar\Exception\InvalidCollectionItemException;
+use App\Scalar\Exception\InvalidCollectionItemException;
 
 /**
  * Class Collection

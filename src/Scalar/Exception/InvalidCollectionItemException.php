@@ -1,6 +1,6 @@
 <?php
 
-namespace Scalar\Exception;
+namespace App\Scalar\Exception;
 
 /**
  * Class InvalidCollectionItemException

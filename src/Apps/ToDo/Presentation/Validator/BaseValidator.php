@@ -2,23 +2,9 @@
 
 namespace App\Apps\ToDo\Presentation\Validator;
 
-use App\Apps\ToDo\Presentation\Exception\InvalidRequestException;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
-use Scalar\Exception\InvalidStringException;
-use App\Scalar\ValueObject\String\StringLiteral;
-use App\Validator\CityName;
-use App\Validator\CurrencyCode;
-use App\Validator\IntegerOutOfRangeException;
-use App\Validator\InvalidEnumValueException;
-use App\Validator\InvalidTimeZoneException;
-use App\Validator\NumericValueOutOfRangeException;
-use App\Validator\Street;
-use App\Validator\TimeZone;
-use App\Validator\UnsignedFloat;
-use App\Validator\UnsignedInteger;
-use App\Validator\ZipCode;
 
 /**
  * Class BaseValidator
@@ -26,51 +12,15 @@ use App\Validator\ZipCode;
 class BaseValidator
 {
     /**
-     * General callback.
-     *
-     * @var string
-     */
-    public const CALLBACK = 'callback';
-
-    /**
-     * Field.
-     *
-     * @var string
-     */
-    public const FIELD = 'field';
-
-    /**
-     * Validates a request by the given requisites.
-     *
+     * @param string $field
      * @param array $params
-     * @param array $prerequisites
      *
-     * @throws InvalidRequestException
      * @throws InvalidArgumentException
      */
-    protected function isValidRequest(array $params, array $prerequisites)
+    protected function isValidInteger(string $field, array $params)
     {
-        $errors = [];
-print_r($params);
-        foreach ($prerequisites as $prerequisite) {
-            if (is_array($prerequisite)) {
-                $this->isValidPrerequisite($prerequisite);
-
-                try {
-                    call_user_func(
-                        $prerequisite[static::CALLBACK],
-                        $prerequisite[static::FIELD],
-                        $params
-                    );
-                } catch (InvalidArgumentException $e) {
-                    $errors[$prerequisite[static::FIELD]] = $e->getMessage();
-                }
-            }
-        }
-
-        if (count($errors)) {
-            throw new InvalidRequestException($errors);
-        }
+        $this->hasField($field, $params);
+        $this->isNumeric($field, $params);
     }
 
     /**
@@ -97,151 +47,10 @@ print_r($params);
      *
      * @throws InvalidArgumentException
      */
-    protected function isValidUnsignedInteger(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isNumeric($field, $params);
-
-        try {
-            UnsignedInteger::validate($params[$field]);
-        } catch (IntegerOutOfRangeException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidUnsignedFloat(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isNumeric($field, $params);
-
-        try {
-            UnsignedFloat::validate($params[$field]);
-        } catch (NumericValueOutOfRangeException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidStringLiteral(string $field, array $params)
+    protected function isValidString(string $field, array $params)
     {
         $this->hasField($field, $params);
         $this->isString($field, $params);
-
-        try {
-            StringLiteral::validate($params[$field]);
-        } catch (InvalidStringException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidYesNo(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-
-        if (!in_array($params[$field], ['y', 'n', 'yes', 'no', 1, 0], true)) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidStatus(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-
-        if (!in_array($params[$field], [Status::ACTIVE, Status::INACTIVE], true)) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     */
-    protected function isValidZipCode(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isString($field, $params);
-
-        try {
-            ZipCode::validate($params[$field]);
-        } catch (InvalidStringException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     */
-    protected function isValidCityName(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isString($field, $params);
-
-        try {
-            CityName::validate($params[$field]);
-        } catch (InvalidStringException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     */
-    protected function isValidStreet(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isString($field, $params);
-
-        try {
-            Street::validate($params[$field]);
-        } catch (InvalidStringException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidDataUri(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isString($field, $params);
-        $this->isValidStringLiteral($field, $params);
-
-        if (!preg_match('/^data:/', $params[$field])) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-        // 20M
-        if (strlen($params[$field]) > 20971520) {
-            throw new InvalidArgumentException($field . ' is too long');
-        }
     }
 
     /**
@@ -280,83 +89,6 @@ print_r($params);
     {
         if (!is_numeric($params[$field])) {
             throw new InvalidArgumentException('Invalid numeric value in ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidCurrencyCode(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isString($field, $params);
-
-        try {
-            CurrencyCode::validate($params[$field]);
-        } catch (InvalidEnumValueException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidTimeZone(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-        $this->isString($field, $params);
-
-        try {
-            TimeZone::validate($params[$field]);
-        } catch (InvalidTimeZoneException $e) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param string $field
-     * @param array $params
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function isValidArray(string $field, array $params)
-    {
-        $this->hasField($field, $params);
-
-        if (!is_array($params[$field])) {
-            throw new InvalidArgumentException('Invalid ' . $field);
-        }
-    }
-
-    /**
-     * @param array $prerequisite
-     *
-     * @throws InvalidArgumentException
-     */
-    private function isValidPrerequisite(array $prerequisite)
-    {
-        if (empty($prerequisite[static::FIELD])) {
-            throw new InvalidArgumentException('The field is required in prerequisite check');
-        }
-        if (!is_string($prerequisite[static::FIELD])) {
-            throw new InvalidArgumentException('The field is invalid in prerequisite check');
-        }
-
-        if (empty($prerequisite[static::CALLBACK])) {
-            throw new InvalidArgumentException(
-                'The callback is required in prerequisite check [field: ' . $prerequisite[static::FIELD] . ']'
-            );
-        }
-        if (!is_string($prerequisite[static::CALLBACK]) && !is_array($prerequisite[static::CALLBACK])) {
-            throw new InvalidArgumentException(
-                'The callback is invalid in prerequisite check [field: ' . $prerequisite[static::FIELD] . ']'
-            );
         }
     }
 }

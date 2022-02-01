@@ -3,9 +3,6 @@
 namespace App\Apps\ToDo\Domain\Contract;
 
 use App\Apps\ToDo\Application\Collection\ToDoCollection;
-use App\Scalar\ValueObject\Boolean\BooleanValue;
-use App\Scalar\ValueObject\DateTime\DateTime;
-use App\Scalar\ValueObject\String\StringLiteral;
 
 /**
  * interface ToDoRepositoryInterface
@@ -13,16 +10,22 @@ use App\Scalar\ValueObject\String\StringLiteral;
 interface ToDoRepositoryInterface
 {
     /**
-     * @param StringLiteral $taskName
-     * @param DateTime $dateTime
-     * @param BooleanValue $isDone
+     * @param string $taskName
+     * @param \DateTime $dateTime
      *
      * @return mixed
      */
-    public function add(StringLiteral $taskName, DateTime $dateTime, BooleanValue $isDone);
+    public function add(string $taskName, \DateTime $dateTime);
 
     /**
      * @return ToDoCollection
      */
     public function getAll(): ToDoCollection;
+
+    /**
+     * @param int $toDoId
+     *
+     * @return mixed
+     */
+    public function setDone(int $toDoId);
 }

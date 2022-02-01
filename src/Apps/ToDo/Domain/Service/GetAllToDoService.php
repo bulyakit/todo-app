@@ -3,9 +3,8 @@
 namespace App\Apps\ToDo\Domain\Service;
 
 use App\Apps\ToDo\Application\Collection\ToDoCollection;
-use App\Apps\ToDo\Domain\Aggregate\ToDo;
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
-use Scalar\Exception\InvalidCollectionItemException;
+use App\Scalar\Exception\InvalidCollectionItemException;
 
 /**
  * Class GetAllToDoService
@@ -18,7 +17,7 @@ class GetAllToDoService
     private ToDoRepository $repository;
 
     /**
-     * GetAllUserService constructor.
+     * GetAllToDoService constructor.
      *
      * @param ToDoRepository $repository
      */
@@ -33,11 +32,6 @@ class GetAllToDoService
      */
     public function getAll(): ToDoCollection
     {
-        $toDo = new ToDo('getAll');
-        $toDoCollection = new ToDoCollection;
-        $toDoCollection->add('first', $toDo);
-//        return $toDoCollection;
-
         return $this->repository->getAll();
     }
 }

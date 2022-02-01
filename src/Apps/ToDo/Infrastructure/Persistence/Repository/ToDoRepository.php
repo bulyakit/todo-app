@@ -6,10 +6,7 @@ use App\Apps\ToDo\Application\Collection\ToDoCollection;
 use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 use App\Apps\ToDo\Infrastructure\Persistence\Factory\ToDoFactory;
 use App\Database\Contract\ConnectionInterface;
-use Scalar\Exception\InvalidCollectionItemException;
-use App\Scalar\ValueObject\Boolean\BooleanValue;
-use App\Scalar\ValueObject\DateTime\DateTime;
-use App\Scalar\ValueObject\String\StringLiteral;
+use App\Scalar\Exception\InvalidCollectionItemException;
 
 
 /**
@@ -37,38 +34,36 @@ class ToDoRepository implements ToDoRepositoryInterface
     }
 
     /**
-     * @param StringLiteral $taskName
-     * @param DateTime $dateTime
-     * @param BooleanValue $isDone
+     * @param string $taskName
+     * @param \DateTime $dateTime
      *
      * @return void
      */
-    public function add(StringLiteral $taskName, DateTime $dateTime, BooleanValue $isDone)
+    public function add(string $taskName, \DateTime $dateTime)
     {
         $query = "
             INSERT INTO
                 `task`
             (
-             `taskName`, 
-             `dateTime`,
-             `isDone`
+             `task_name`, 
+             `datetime`,
+             `created_at`
              )
             VALUES
                 (
                  :taskName,
                  :dateTime,
-                 :isDone
+                 :createdAt
                  )
             ";
 
         $bindings = [
-          'taskName' => $taskName->getValue(),
-          'dateTime' => $dateTime->getValue(),
-          'isDone'   => $isDone->getValue(),
+            'taskName'  => $taskName,
+            'dateTime'  => $dateTime->format('Y-m-h m:i:s'),
+            'createdAt' => date_create()->format('Y-m-d H:i:s'),
         ];
 
         $this->connection->insert($query, $bindings);
-
     }
 
     /**
@@ -79,17 +74,17 @@ class ToDoRepository implements ToDoRepositoryInterface
     {
         $query = "
             SELECT
-              *
+              `id`,
+              `task_name`,
+              `datetime`,
+              `is_done`,
+              `created_at`
             FROM
-              `test_table`
+              `task`
+            ORDER BY
+               `datetime`
+            DESC
         ";
-//        $db    = $this->getConnection();
-//        $sth   = $db->prepare($query);
-//        $sth->bindParam("id", $args['id']);
-//        $sth->execute();
-//        $todos = $sth->fetchObject();
-//        return json_encode($todos);
-
 
         $toDos          = new ToDoCollection();
         $repositoryRows = $this->connection->select($query);
@@ -99,5 +94,38 @@ class ToDoRepository implements ToDoRepositoryInterface
         }
 
         return $toDos;
+    }
+
+    /**
+     * @param int $toDoId
+     *
+     * @return void
+     */
+    public function setDone(int $toDoId)
+    {
+        $query = "
+            UPDATE
+              `task`
+            SET
+              `is_done` = 1
+            WHERE
+              `id` = :id
+        ";
+
+        $bindings = [
+            'id' => $toDoId,
+        ];
+
+        $this->connection->update($query, $bindings);
+    }
+
+    private function ddq($query, $bindings)
+    {
+        global $db;
+        $result = $query;
+        foreach ($bindings as $key => $val) {
+            $result = str_replace(':' . $key, is_numeric($val) ? $val : "'" . $db->escape($val) . "'", $result);
+        }
+        die($result);
     }
 }

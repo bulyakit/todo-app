@@ -3,6 +3,7 @@
 namespace App\Apps\ToDo\Infrastructure\Persistence\Factory;
 
 use App\Apps\ToDo\Domain\Aggregate\ToDo;
+use DateTime;
 
 /**
  * Class ToDoFactory
@@ -17,7 +18,10 @@ class ToDoFactory
     public function create(array $repositoryRow): ToDo
     {
         return new ToDo(
-            $repositoryRow['name']
+            $repositoryRow['task_name'],
+            DateTime::createFromFormat('Y-m-d H:i:s', $repositoryRow['datetime']),
+            (bool)$repositoryRow['is_done'],
+            DateTime::createFromFormat('Y-m-d H:i:s', $repositoryRow['created_at']),
         );
     }
 }

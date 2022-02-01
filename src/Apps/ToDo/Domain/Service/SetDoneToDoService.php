@@ -5,9 +5,9 @@ namespace App\Apps\ToDo\Domain\Service;
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
 
 /**
- * Class AddToDoService
+ * Class SetDoneToDoService
  */
-class AddToDoService
+class SetDoneToDoService
 {
     /**
      * @var ToDoRepository
@@ -15,7 +15,7 @@ class AddToDoService
     private ToDoRepository $repository;
 
     /**
-     * AddToDoService constructor.
+     * SetDoneToDoService constructor.
      *
      * @param ToDoRepository $repository
      */
@@ -27,8 +27,8 @@ class AddToDoService
     /**
      * @return void
      */
-    public function add(string $taskName, \DateTime $dateTime)
+    public function set(int $toDoId)
     {
-        $this->repository->add($taskName, $dateTime);
+        $this->repository->setDone($toDoId);
     }
 }

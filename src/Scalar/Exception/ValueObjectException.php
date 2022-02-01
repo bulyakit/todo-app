@@ -1,6 +1,6 @@
 <?php
 
-namespace Scalar\Exception;
+namespace App\Scalar\Exception;
 
 use Exception;
 

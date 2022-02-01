@@ -2,18 +2,16 @@
 
 namespace App\Apps\ToDo\Presentation\Controller;
 
-use App\Apps\ToDo\Application\Contract\ToDoServiceInterface;
 use App\Apps\ToDo\Application\Service\ToDoService;
 use App\Apps\ToDo\Presentation\Formatter\ToDoResponseFormatter;
 use App\Apps\ToDo\Presentation\Mapper\ToDoParamsMapper;
 use App\Apps\ToDo\Presentation\Validator\ToDoRequestValidator;
 use App\Database\Contract\ConnectionInterface;
-use App\Database\Exception\DatabaseException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use App\Scalar\ValueObject\Boolean\BooleanValue;
+use App\Scalar\Exception\InvalidCollectionItemException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -28,25 +26,20 @@ class ToDoController extends AbstractController
      * @param array $args
      *
      * @return ResponseInterface
-     * @throws DatabaseException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function doAdd(RequestInterface $request, ResponseInterface $response, array $args = []): ResponseInterface
     {
-        $service = $this->getService();
-        $params = $this->getParams($request, $args);
-
+        $params    = $this->getParams($request, $args);
         $validator = new ToDoRequestValidator();
         $validator->validateAdd($params);
-        $mapper = new ToDoParamsMapper();
+
+        $mapper       = new ToDoParamsMapper();
         $mappedParams = $mapper->mapAdd($params);
-        $service->add($mappedParams[0], $mappedParams[1], new BooleanValue(false));
-//        $data = $this->doIt($status, $request, $args, [
-//            Callback::VALIDATOR => [new ToDoRequestValidator(), 'validateAdd'],
-//            Callback::MAPPER    => [new ToDoParamsMapper(), 'mapAdd'],
-//            Callback::SERVICE   => [$service, 'add'],
-//            Callback::FORMATTER => [new ToDoResponseFormatter(), 'formatAdd'],
-//        ]);
-//
+        $service      = $this->getService();
+        $service->add($mappedParams[0], $mappedParams[1]);
+
         return $this->render($request, $response, $args);
     }
 
@@ -57,36 +50,51 @@ class ToDoController extends AbstractController
      * @param array $args
      *
      * @return ResponseInterface
-     * @throws DatabaseException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws InvalidCollectionItemException
+     * @throws \Exception
      */
     public function doGetAll(
         RequestInterface $request,
         ResponseInterface $response,
         array $args = []
     ): ResponseInterface {
-
-        $service = $this->getService();
-
-        $result = $service->getAll();
-
+        $service   = $this->getService();
+        $result    = $service->getAll();
         $formatter = new TodoResponseFormatter();
-
-
-        $data = $formatter->formatGetAll($result);
-
-
-//        $params = $this->getParams($request, $args);
-//
-//        var_dump($params);
-
-//        $status = "OK"; //TODO check this
-//        $data = $this->doIt($status, $request, $args, [
-//            Callback::SERVICE   => [$service, 'getAll'],
-//            Callback::FORMATTER => [new ToDoResponseFormatter(), 'formatGetAll'],
-//        ]);
+        $data      = $formatter->formatGetAll($result);
 
         return $this->render($request, $response, $args, $data);
     }
+
+    /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $args
+     *
+     * @return ResponseInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function doSetDone(
+        RequestInterface $request,
+        ResponseInterface $response,
+        array $args = []
+    ): ResponseInterface {
+        $params    = $this->getParams($request, $args);
+        $validator = new ToDoRequestValidator();
+        $validator->validateSetDone($params);
+
+        $mapper       = new ToDoParamsMapper();
+        $mappedParams = $mapper->mapSetDone($params);
+
+        $service   = $this->getService();
+        $service->setDone($mappedParams[0]);
+
+        return $this->render($request, $response, $args);
+    }
+
 
     /**
      * @return ToDoService
@@ -95,11 +103,6 @@ class ToDoController extends AbstractController
      */
     private function getService(): ToDoService
     {
-        /** @var ToDoServiceInterface $service */
-//        $config = include(__DIR__ . '/../Config/settings.php');
-//        $dbConfig = $config['settings']['database'];
-//        $connection = new Connection($dbConfig);
-
         $connection = $this->container->get(ConnectionInterface::class);
 
         return new ToDoService($connection);
@@ -110,8 +113,6 @@ class ToDoController extends AbstractController
      * @param ResponseInterface $response
      * @param array $args
      * @param array $data
-     * @param int $status
-     * @param int $encodingOptions
      *
      * @return ResponseInterface
      */
@@ -119,10 +120,10 @@ class ToDoController extends AbstractController
         RequestInterface $request,
         ResponseInterface $response,
         array $args = [],
-        array $data = [],
-        int $status = 200,
-        int $encodingOptions = 0
+        array $data = []
     ): ResponseInterface {
+        $status = 200;
+        $encodingOptions = 0;
         /** @var Response $response */
         return $response->withJson(
             [

@@ -2,7 +2,7 @@
 
 namespace App\Scalar\Collection;
 
-use Scalar\Exception\InvalidCollectionItemException;
+use App\Scalar\Exception\InvalidCollectionItemException;
 
 /**
  * Class HashMap
@@ -17,16 +17,6 @@ abstract class HashMap extends AbstractCollection
     public function containsKey(string $key): bool
     {
         return array_key_exists($key, $this->items);
-    }
-
-    /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function containsValue($item): bool
-    {
-        return array_search($item, $this->items) !== false;
     }
 
     /**

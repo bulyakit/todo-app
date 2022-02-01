@@ -6,7 +6,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
-use Scalar\Exception\InvalidCollectionItemException;
+use App\Scalar\Exception\InvalidCollectionItemException;
 use Traversable;
 
 /**
