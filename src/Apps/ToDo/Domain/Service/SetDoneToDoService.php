@@ -2,7 +2,7 @@
 
 namespace App\Apps\ToDo\Domain\Service;
 
-use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
+use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 
 /**
  * Class SetDoneToDoService
@@ -10,16 +10,16 @@ use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
 class SetDoneToDoService
 {
     /**
-     * @var ToDoRepository
+     * @var ToDoRepositoryInterface
      */
-    private ToDoRepository $repository;
+    private ToDoRepositoryInterface $repository;
 
     /**
      * SetDoneToDoService constructor.
      *
-     * @param ToDoRepository $repository
+     * @param ToDoRepositoryInterface $repository
      */
-    public function __construct(ToDoRepository $repository)
+    public function __construct(ToDoRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

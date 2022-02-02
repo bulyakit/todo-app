@@ -4,13 +4,13 @@ namespace App\Apps\ToDo\Application\Service;
 
 use App\Apps\ToDo\Application\Collection\ToDoCollection;
 use App\Apps\ToDo\Application\Contract\ToDoServiceInterface;
+use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 use App\Apps\ToDo\Domain\Service\AddToDoService;
 use App\Apps\ToDo\Domain\Service\GetAllToDoService;
 use App\Apps\ToDo\Domain\Service\SetDoneToDoService;
 use App\Apps\ToDo\Infrastructure\Persistence\Factory\ToDoFactory;
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
 use App\Database\Contract\ConnectionInterface;
-use App\Collection\Exception\InvalidCollectionItemException;
 use DateTime;
 
 /**
@@ -39,7 +39,7 @@ class ToDoService implements ToDoServiceInterface
      */
     public function add(string $taskName, DateTime $dateTime): int
     {
-        $repository = $this->getTodoRepositoryService();
+        $repository     = $this->getTodoRepositoryInterface();
         $addToDoService = new AddToDoService($repository);
 
         return $addToDoService->add($taskName, $dateTime);
@@ -47,11 +47,10 @@ class ToDoService implements ToDoServiceInterface
 
     /**
      * @return ToDoCollection
-     * @throws InvalidCollectionItemException
      */
     public function getAll(): ToDoCollection
     {
-        $repository = $this->getTodoRepositoryService();
+        $repository        = $this->getTodoRepositoryInterface();
         $getAllToDoService = new GetAllToDoService($repository);
 
         return $getAllToDoService->getAll();
@@ -64,16 +63,16 @@ class ToDoService implements ToDoServiceInterface
      */
     public function setDone(int $toDoId)
     {
-        $repository = $this->getTodoRepositoryService();
+        $repository         = $this->getTodoRepositoryInterface();
         $setDoneToDoService = new SetDoneToDoService($repository);
 
         $setDoneToDoService->set($toDoId);
     }
 
     /**
-     * @return ToDoRepository
+     * @return ToDoRepositoryInterface
      */
-    private function getTodoRepositoryService(): TodoRepository
+    private function getTodoRepositoryInterface(): ToDoRepositoryInterface
     {
         $factory = new ToDoFactory();
 

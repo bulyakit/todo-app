@@ -20,11 +20,11 @@ class AddToDoServiceTest extends TestCase
         \DateTime $dateTime,
         int $expected
     ) {
-        /** @var ToDoRepositoryInterface|MockObject $repository */
+        /** @var ToDoRepositoryInterface&MockObject $repository */
         $repository = $this->getMockBuilder(ToDoRepositoryInterface::class)
                            ->getMock();
         $repository->expects($this->once())
-                   ->method('create')
+                   ->method('add')
                    ->with($taskName, $dateTime)
                    ->willReturn($expected);
 

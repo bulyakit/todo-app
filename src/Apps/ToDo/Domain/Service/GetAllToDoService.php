@@ -3,8 +3,7 @@
 namespace App\Apps\ToDo\Domain\Service;
 
 use App\Apps\ToDo\Application\Collection\ToDoCollection;
-use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
-use App\Collection\Exception\InvalidCollectionItemException;
+use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 
 /**
  * Class GetAllToDoService
@@ -12,23 +11,22 @@ use App\Collection\Exception\InvalidCollectionItemException;
 class GetAllToDoService
 {
     /**
-     * @var ToDoRepository
+     * @var ToDoRepositoryInterface
      */
-    private ToDoRepository $repository;
+    private ToDoRepositoryInterface $repository;
 
     /**
      * GetAllToDoService constructor.
      *
-     * @param ToDoRepository $repository
+     * @param ToDoRepositoryInterface $repository
      */
-    public function __construct(ToDoRepository $repository)
+    public function __construct(ToDoRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
 
     /**
      * @return ToDoCollection
-     * @throws InvalidCollectionItemException
      */
     public function getAll(): ToDoCollection
     {
