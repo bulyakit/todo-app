@@ -1,4 +1,15 @@
 {
+  "name": "bulyakit/to-do",
+  "description": "A small Slim Framework application",
+  "homepage": "https://github.com/bulyakit/to-do",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tamas Bulyaki",
+      "email": "bulyakit@gmail.com"
+    }
+  ],
+
   "require": {
     "flynsarmy/slim-monolog": "^1.0",
     "guzzlehttp/guzzle": "^6.3",

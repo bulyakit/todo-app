@@ -18,6 +18,7 @@ class ToDoFactory
     public function create(array $repositoryRow): ToDo
     {
         return new ToDo(
+            (int)$repositoryRow['id'],
             $repositoryRow['task_name'],
             DateTime::createFromFormat('Y-m-d H:i:s', $repositoryRow['datetime']),
             (bool)$repositoryRow['is_done'],

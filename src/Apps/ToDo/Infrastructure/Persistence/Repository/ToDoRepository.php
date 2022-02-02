@@ -7,6 +7,7 @@ use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 use App\Apps\ToDo\Infrastructure\Persistence\Factory\ToDoFactory;
 use App\Collection\Exception\InvalidCollectionItemException;
 use App\Database\Contract\ConnectionInterface;
+use DateTime;
 
 
 /**
@@ -35,11 +36,11 @@ class ToDoRepository implements ToDoRepositoryInterface
 
     /**
      * @param string $taskName
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
      *
      * @return void
      */
-    public function add(string $taskName, \DateTime $dateTime)
+    public function add(string $taskName, DateTime $dateTime)
     {
         $query = "
             INSERT INTO
@@ -59,7 +60,7 @@ class ToDoRepository implements ToDoRepositoryInterface
 
         $bindings = [
             'taskName'  => $taskName,
-            'dateTime'  => $dateTime->format('Y-m-h m:i:s'),
+            'dateTime'  => $dateTime->format('Y-m-d H:i:s'),
             'createdAt' => date_create()->format('Y-m-d H:i:s'),
         ];
 
@@ -117,15 +118,5 @@ class ToDoRepository implements ToDoRepositoryInterface
         ];
 
         $this->connection->update($query, $bindings);
-    }
-
-    private function ddq($query, $bindings)
-    {
-        global $db;
-        $result = $query;
-        foreach ($bindings as $key => $val) {
-            $result = str_replace(':' . $key, is_numeric($val) ? $val : "'" . $db->escape($val) . "'", $result);
-        }
-        die($result);
     }
 }

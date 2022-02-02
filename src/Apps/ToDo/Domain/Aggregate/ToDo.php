@@ -10,6 +10,11 @@ use DateTime;
 class ToDo
 {
     /**
+     * @var int
+     */
+    private int $id;
+
+    /**
      * @var string
      */
     private string $taskName;
@@ -30,21 +35,32 @@ class ToDo
     private DateTime $createdAt;
 
     /**
+     * @param int $id
      * @param string $taskName
      * @param DateTime $dateTime
      * @param bool $isDone
      * @param DateTime $createdAt
      */
     public function __construct(
+        int $id,
         string $taskName,
         DateTime $dateTime,
         bool $isDone,
         DateTime $createdAt
     ) {
+        $this->id        = $id;
         $this->taskName  = $taskName;
         $this->dateTime  = $dateTime;
         $this->isDone    = $isDone;
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**
@@ -78,6 +94,4 @@ class ToDo
     {
         return $this->createdAt;
     }
-
-
 }
