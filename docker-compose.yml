@@ -34,7 +34,7 @@ services:
     
     composer:
         image: composer:2.2.0
-        command: composer install
+        command: composer dump-autoload
         volumes:
             - ./:/app
     

@@ -1,8 +1,9 @@
 <?php
 
-namespace unit\Apps\ToDo\Domain\Aggregate;
+namespace App\Tests\Unit\Apps\ToDo\Domain\Aggregate;
 
 use App\Apps\ToDo\Domain\Aggregate\ToDo;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class ToDoTest extends TestCase
@@ -13,9 +14,9 @@ class ToDoTest extends TestCase
     public function testGetters(
         int $id,
         string $taskName,
-        \DateTime $dateTime,
+        DateTime $dateTime,
         bool $isDone,
-        \DateTime $createdAt
+        DateTime $createdAt
     ) {
         $toDo = new ToDo(
             $id,
@@ -41,9 +42,9 @@ class ToDoTest extends TestCase
             [
                 1,
                 'test taskName',
-                \DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22'),
+                DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22'),
                 false,
-                \DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-01 22:11')
+                DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-01 22:11')
             ],
         ];
     }
