@@ -8,6 +8,7 @@ use App\Apps\ToDo\Presentation\Mapper\ToDoParamsMapper;
 use App\Apps\ToDo\Presentation\Validator\ToDoRequestValidator;
 use App\Database\Contract\ConnectionInterface;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -18,8 +19,23 @@ use Slim\Http\Response;
 /**
  * Class ToDoController
  */
-class ToDoController extends AbstractController
+class ToDoController
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected ContainerInterface $container;
+
+    /**
+     * ToDoController constructor.
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param RequestInterface $request
      * @param ResponseInterface $response
