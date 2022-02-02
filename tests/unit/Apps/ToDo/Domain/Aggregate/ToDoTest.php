@@ -1,6 +1,6 @@
 <?php
 
-namespace unit\Domain\Aggregate;
+namespace unit\Apps\ToDo\Domain\Aggregate;
 
 use App\Apps\ToDo\Domain\Aggregate\ToDo;
 use PHPUnit\Framework\TestCase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace unit\Domain\Service;
+namespace unit\Apps\ToDo\Domain\Service;
 
 use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 use App\Apps\ToDo\Domain\Service\AddToDoService;
