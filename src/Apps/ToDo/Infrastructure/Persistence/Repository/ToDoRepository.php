@@ -9,7 +9,6 @@ use App\Collection\Exception\InvalidCollectionItemException;
 use App\Database\Contract\ConnectionInterface;
 use DateTime;
 
-
 /**
  * Class ToDoRepository
  */

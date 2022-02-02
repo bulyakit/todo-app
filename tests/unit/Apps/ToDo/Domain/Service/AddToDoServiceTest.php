@@ -1,6 +1,6 @@
 <?php
 
-namespace unit\Apps\ToDo\Domain\Service;
+namespace App\Tests\Unit\Apps\ToDo\Domain\Service;
 
 use App\Apps\ToDo\Domain\Contract\ToDoRepositoryInterface;
 use App\Apps\ToDo\Domain\Service\AddToDoService;
@@ -18,7 +18,7 @@ class AddToDoServiceTest extends TestCase
     public function testAdd(
         string $taskName,
         \DateTime $dateTime,
-        array $expected
+        int $expected
     ) {
         /** @var ToDoRepositoryInterface|MockObject $repository */
         $repository = $this->getMockBuilder(ToDoRepositoryInterface::class)
@@ -42,12 +42,14 @@ class AddToDoServiceTest extends TestCase
         return [
             [
                 'Test task one',
-                \DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22'),
+                \DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22:00'),
+                1,
 
             ],
             [
                 'Test task two',
-                \DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22'),
+                \DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22:11'),
+                2,
             ],
         ];
     }

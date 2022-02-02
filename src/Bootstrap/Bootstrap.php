@@ -13,7 +13,6 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\InvalidArgumentException;
 use Slim\App;
 
-
 /**
  * Class Bootstrap
  */
@@ -56,7 +55,7 @@ class Bootstrap
         $container = $this->application->getContainer();
         try {
             $settings = $container->get('settings');
-        } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+        } catch (NotFoundExceptionInterface | ContainerExceptionInterface $e) {
         }
 
         $defaultTimeZone = $settings['defaultTimeZone'] ?? 'UTC';

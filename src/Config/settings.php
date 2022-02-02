@@ -23,30 +23,5 @@ return [
         ],
 
         'displayErrorDetails' => true,
-        // Logger settings.
-//        'logger' => [
-//            'name'     => 'to_do_logger',
-//            'ident'    => 'php_to_do',
-//            'facility' => 184, // LOG_LOCAL7
-//            'level'    => \Monolog\Logger::DEBUG,
-//            'bubble'   => true,
-//            'logopts'  => 4, // LOG_ODELAY
-//        ],
-
-        // Cross origin resource sharing.
-//        'cors' => [
-//            'origin'  => '*',
-//            'headers' => [
-//                'X-Auth-Token',
-//                'Content-Type',
-//            ],
-//            'methods' => [
-//                'GET',
-//                'POST',
-//                'PUT',
-//                'DELETE',
-//                'OPTIONS',
-//            ],
-//        ],
     ],
 ];

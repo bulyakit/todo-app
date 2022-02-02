@@ -42,9 +42,9 @@ class ToDoTest extends TestCase
             [
                 1,
                 'test taskName',
-                DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22'),
+                DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-02 11:22:11'),
                 false,
-                DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-01 22:11')
+                DateTime::createFromFormat('Y-m-d H:i:s', '2022-02-01 22:11:00')
             ],
         ];
     }

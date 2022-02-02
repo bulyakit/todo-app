@@ -6,7 +6,6 @@ use App\Apps\ToDo\Application\Collection\ToDoCollection;
 use App\Apps\ToDo\Domain\Aggregate\ToDo;
 use Exception;
 
-
 /**
  * Class ToDoResponseFormatter
  */

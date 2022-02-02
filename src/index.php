@@ -18,4 +18,3 @@ try {
 } catch (Throwable $e) {
     echo $e->getMessage() . PHP_EOL;
 }
-

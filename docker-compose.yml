@@ -46,9 +46,3 @@ services:
             - 8888:80
         environment:
             PMA_HOST: db
-
-    phpcs:
-        image: cytopia/phpcs
-        container_name: php_codesniffer
-        volumes:
-            - ./src/:/data

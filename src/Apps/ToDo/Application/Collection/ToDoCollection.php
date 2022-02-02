@@ -12,6 +12,11 @@ class ToDoCollection extends HashMap
 {
     protected ?string $type = ToDo::class;
 
+    /**
+     * @param string $key
+     *
+     * @return void
+     */
     public function remove(string $key)
     {
         unset($this->items[$key]);
