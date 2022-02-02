@@ -38,9 +38,9 @@ class ToDoRepository implements ToDoRepositoryInterface
      * @param string $taskName
      * @param DateTime $dateTime
      *
-     * @return void
+     * @return int
      */
-    public function add(string $taskName, DateTime $dateTime)
+    public function add(string $taskName, DateTime $dateTime): int
     {
         $query = "
             INSERT INTO
@@ -64,7 +64,7 @@ class ToDoRepository implements ToDoRepositoryInterface
             'createdAt' => date_create()->format('Y-m-d H:i:s'),
         ];
 
-        $this->connection->insert($query, $bindings);
+        return $this->connection->insert($query, $bindings);
     }
 
     /**

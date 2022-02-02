@@ -3,6 +3,7 @@
 namespace App\Apps\ToDo\Domain\Contract;
 
 use App\Apps\ToDo\Application\Collection\ToDoCollection;
+use DateTime;
 
 /**
  * interface ToDoRepositoryInterface
@@ -11,11 +12,11 @@ interface ToDoRepositoryInterface
 {
     /**
      * @param string $taskName
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
      *
-     * @return mixed
+     * @return int
      */
-    public function add(string $taskName, \DateTime $dateTime);
+    public function add(string $taskName, DateTime $dateTime): int;
 
     /**
      * @return ToDoCollection

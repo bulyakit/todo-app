@@ -3,6 +3,7 @@
 namespace App\Apps\ToDo\Domain\Service;
 
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
+use DateTime;
 
 /**
  * Class AddToDoService
@@ -25,10 +26,13 @@ class AddToDoService
     }
 
     /**
-     * @return void
+     * @param string $taskName
+     * @param DateTime $dateTime
+     *
+     * @return int
      */
-    public function add(string $taskName, \DateTime $dateTime)
+    public function add(string $taskName, DateTime $dateTime): int
     {
-        $this->repository->add($taskName, $dateTime);
+        return $this->repository->add($taskName, $dateTime);
     }
 }

@@ -11,6 +11,7 @@ use App\Apps\ToDo\Infrastructure\Persistence\Factory\ToDoFactory;
 use App\Apps\ToDo\Infrastructure\Persistence\Repository\ToDoRepository;
 use App\Database\Contract\ConnectionInterface;
 use App\Collection\Exception\InvalidCollectionItemException;
+use DateTime;
 
 /**
  * Class ToDoService
@@ -32,14 +33,16 @@ class ToDoService implements ToDoServiceInterface
 
     /**
      * @param string $taskName
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
+     *
+     * @return int
      */
-    public function add(string $taskName, \DateTime $dateTime)
+    public function add(string $taskName, DateTime $dateTime): int
     {
         $repository = $this->getTodoRepositoryService();
         $addToDoService = new AddToDoService($repository);
 
-        $addToDoService->add($taskName, $dateTime);
+        return $addToDoService->add($taskName, $dateTime);
     }
 
     /**
@@ -53,7 +56,6 @@ class ToDoService implements ToDoServiceInterface
 
         return $getAllToDoService->getAll();
     }
-
 
     /**
      * @param int $toDoId

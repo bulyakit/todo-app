@@ -1,6 +1,6 @@
 {
   "name": "bulyakit/to-do",
-  "description": "A small Slim Framework application",
+  "description": "A small experiment Slim Framework application",
   "homepage": "https://github.com/bulyakit/to-do",
   "license": "MIT",
   "authors": [
@@ -11,11 +11,16 @@
   ],
 
   "require": {
-    "flynsarmy/slim-monolog": "^1.0",
     "guzzlehttp/guzzle": "^6.3",
     "psr/log": "^1.0",
     "slim/slim": "^3.0",
     "ext-json": "*"
+  },
+
+  "require-dev": {
+    "phpmd/phpmd": "^2.7",
+    "phpunit/phpunit": "^9.5",
+    "squizlabs/php_codesniffer": "^3.0"
   },
 
   "autoload": {
